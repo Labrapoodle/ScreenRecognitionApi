@@ -14,10 +14,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpClient("ollama", client =>
 {
     client.BaseAddress = new Uri("http://localhost:11434/");
-    client.Timeout = TimeSpan.FromMinutes(10);
+    client.Timeout = TimeSpan.FromMinutes(30);
 });
 
 // Основной сервис распознавания
+builder.Services.AddSingleton<ImageMatcher>();
 builder.Services.AddSingleton<OcrService>();
 
 builder.Services.AddCors(options =>

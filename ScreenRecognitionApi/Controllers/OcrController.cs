@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ScreenRecognitionApi.Services;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -9,8 +10,9 @@ namespace ScreenRecognitionApi.Controllers;
 // 1. Создаем простую модель для входящего JSON (DTO)
 public class OcrRequest
 {
+    [Required]
     public string ImageBase64 { get; set; }
-    public string FileKey { get; set; }
+    public string? FileKey { get; set; }
 }
 
 [ApiController]
@@ -44,11 +46,7 @@ public class OcrController : ControllerBase
             return BadRequest(new { success = false, error = "Файл изображения в формате Base64 не передан." });
         }
 
-        // Проверяем ключ шаблона
-        if (string.IsNullOrWhiteSpace(request.FileKey))
-        {
-            return BadRequest(new { success = false, error = "Не указан fileKey." });
-        }
+        
 
         try
         {
